@@ -287,7 +287,69 @@ flowchart TD
 
     FINALIZE --> END
 ```
+# Chart
+```mermaid
+flowchart TD
 
+    START([Start])
+
+    CLASSIFY["Classify Request"]
+
+    ROUTER{"Request Type"}
+
+    KNOWLEDGE["Knowledge"]
+
+    TROUBLE["Troubleshooting"]
+
+    ESCALATION["Escalation"]
+
+    ONBOARDING["Onboarding"]
+
+    GENERAL["General"]
+
+    RETRIEVE["Retrieve Documents"]
+
+    MEMORY["Extract Customer Memory"]
+
+    GENERATE["Generate Answer"]
+
+    REVIEW["Review Answer"]
+
+    FINALIZE["Finalize Response"]
+
+    REGENERATE["Regenerate Answer"]
+
+    END([End])
+
+    START --> CLASSIFY
+
+    CLASSIFY --> ROUTER
+
+    ROUTER -->|Knowledge| RETRIEVE
+    ROUTER -->|Troubleshooting| TROUBLE
+    ROUTER -->|Escalation| ESCALATION
+    ROUTER -->|Onboarding| ONBOARDING
+    ROUTER -->|General| GENERAL
+
+    TROUBLE --> RETRIEVE
+    ESCALATION --> RETRIEVE
+    ONBOARDING --> RETRIEVE
+    GENERAL --> RETRIEVE
+
+    RETRIEVE --> MEMORY
+
+    MEMORY --> GENERATE
+
+    GENERATE --> REVIEW
+
+    REVIEW -->|PASS| FINALIZE
+
+    REVIEW -->|FAIL| REGENERATE
+
+    REGENERATE --> REVIEW
+
+    FINALIZE --> END
+```
 ---
 
 # Project Structure
