@@ -455,6 +455,8 @@ Example:
 
 ```
 5 passed in 793 seconds
+<img width="1723" height="655" alt="image" src="https://github.com/user-attachments/assets/42594659-abd0-44ba-8224-37ac6e7d0605" />
+
 ```
 
 ---
