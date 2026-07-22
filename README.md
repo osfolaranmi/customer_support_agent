@@ -262,7 +262,7 @@ frontend/
 ## Clone Repository
 
 ```bash
-git clone https://github.com/yourusername/customer-support-agent.git
+git clone https://github.com/osfolaranmi/customer_support_agent.git
 
 cd customer-support-agent
 ```
@@ -431,7 +431,7 @@ Example:
 
 ---
 
-## Memory usage
+## Conversation Memory 
 > Follow-up question using memory
 <img width="938" height="994" alt="image" src="https://github.com/user-attachments/assets/6fd39b0f-3dc5-43a2-bb85-96b80618826a" />
 
