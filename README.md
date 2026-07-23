@@ -224,8 +224,71 @@ Finalize ◄────────┘
  │
  ▼
 END
-```
 
+```
+# Architecture Diagram
+```mermaid
+flowchart TD
+
+    START([Start])
+
+    CLASSIFY["Classify Request"]
+
+    ROUTER{"Request Type"}
+
+    KNOWLEDGE["Knowledge"]
+
+    TROUBLE["Troubleshooting"]
+
+    ESCALATION["Escalation"]
+
+    ONBOARDING["Onboarding"]
+
+    GENERAL["General"]
+
+    RETRIEVE["Retrieve Documents"]
+
+    MEMORY["Extract Customer Memory"]
+
+    GENERATE["Generate Answer"]
+
+    REVIEW["Review Answer"]
+
+    FINALIZE["Finalize Response"]
+
+    REGENERATE["Regenerate Answer"]
+
+    END([End])
+
+    START --> CLASSIFY
+
+    CLASSIFY --> ROUTER
+
+    ROUTER -->|Knowledge| RETRIEVE
+    ROUTER -->|Troubleshooting| TROUBLE
+    ROUTER -->|Escalation| ESCALATION
+    ROUTER -->|Onboarding| ONBOARDING
+    ROUTER -->|General| GENERAL
+
+    TROUBLE --> RETRIEVE
+    ESCALATION --> RETRIEVE
+    ONBOARDING --> RETRIEVE
+    GENERAL --> RETRIEVE
+
+    RETRIEVE --> MEMORY
+
+    MEMORY --> GENERATE
+
+    GENERATE --> REVIEW
+
+    REVIEW -->|PASS| FINALIZE
+
+    REVIEW -->|FAIL| REGENERATE
+
+    REGENERATE --> REVIEW
+
+    FINALIZE --> END
+```
 ---
 
 # Project Structure
@@ -262,7 +325,7 @@ frontend/
 ## Clone Repository
 
 ```bash
-git clone https://github.com/yourusername/customer-support-agent.git
+git clone https://github.com/osfolaranmi/customer_support_agent.git
 
 cd customer-support-agent
 ```
@@ -393,6 +456,7 @@ Example:
 ```
 5 passed in 793 seconds
 ```
+<img width="1723" height="655" alt="image" src="https://github.com/user-attachments/assets/42594659-abd0-44ba-8224-37ac6e7d0605" />
 
 ---
 
@@ -400,31 +464,40 @@ Example:
 
 ## Knowledge
 
-> What features are included in the Pro plan?
-
+> What is included in the Pro plan?
+<img width="1628" height="999" alt="image" src="https://github.com/user-attachments/assets/c4bc198e-f623-448e-b617-dd4720bcc03e" />
 ---
 
 ## Troubleshooting
 
-> CSV import keeps failing.
-
+> Why am I seeing duplicate contacts after import?
+<img width="913" height="962" alt="image" src="https://github.com/user-attachments/assets/1ab40914-e029-492c-aa69-94989353ce6d" />
 ---
 
 ## Onboarding
 
-> How do I migrate from Salesforce?
+> We are migrating from spreadsheets. What setup checklist should we follow?
+<img width="1093" height="969" alt="image" src="https://github.com/user-attachments/assets/26402f6a-3e5a-45b1-9668-0f5e664b7492" />
 
 ---
 
 ## Escalation
 
-> My account has been charged twice.
+> I think someone accessed our account without permission.
+<img width="973" height="991" alt="image" src="https://github.com/user-attachments/assets/6998297a-82b2-46ed-a665-46962c44dc89" />
 
 ---
 
 ## General
 
 > Hello!
+<img width="1002" height="527" alt="image" src="https://github.com/user-attachments/assets/0a0a286d-c341-457e-a07b-3741930befe3" />
+
+---
+
+## Conversation Memory 
+> Follow-up question using memory
+<img width="938" height="994" alt="image" src="https://github.com/user-attachments/assets/6fd39b0f-3dc5-43a2-bb85-96b80618826a" />
 
 ---
 
