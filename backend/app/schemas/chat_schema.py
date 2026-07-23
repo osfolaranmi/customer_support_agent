@@ -1,4 +1,4 @@
-from typing import List, Literal
+from typing import List, Literal, Optional
 
 from pydantic import BaseModel
 
@@ -53,3 +53,4 @@ class ChatResponse(BaseModel):
     #memory_updates: List[str]
 
     final_answer: str
+    ticket_id:  Optional[str] = None

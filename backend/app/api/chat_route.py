@@ -50,6 +50,7 @@ def chat(request: Request, payload: ChatRequest):
         sources=result.get("sources", []),
         feedback=result.get("feedback", []),
         review_scores=result.get("review_scores"),
+        ticket_id=result.get("ticket_id"),
         #memory_updates=result.get("memory_updates", []),
         final_answer=result.get("final_answer", result["answer"]),
     )

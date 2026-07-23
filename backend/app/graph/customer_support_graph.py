@@ -5,6 +5,7 @@ from langchain_core.documents import Document
 from langgraph.graph import END, START, StateGraph
 from ..services.memory_service import memory_service
 from ..services.customer_memory import customer_memory
+from ..services.handoff_queue import HandoffQueue
 
 class AgentState(TypedDict):
     question: str
@@ -35,6 +36,8 @@ class AgentState(TypedDict):
 
     assigned_team: str
 
+    ticket_id: str
+
     sources: list[str]
 
     memory_updates: list
@@ -44,10 +47,11 @@ class AgentState(TypedDict):
 
 class CustomerSupportGraph:
 
-    def __init__(self, retriever, llm):
+    def __init__(self, retriever, llm,handoff_queue):
 
         self.retriever = retriever
         self.llm = llm
+        self.handoff_queue = handoff_queue
 
     # ---------------------------------------------------------
     # Helper
@@ -360,7 +364,10 @@ class CustomerSupportGraph:
     def finalize_node(self, state: AgentState):
 
         return {
-            "final_answer": state["answer"]
+            "final_answer": state["answer"],
+            "ticket_id": state.get("ticket_id"),
+            "priority": state["priority"],
+            "assigned_team": state["assigned_team"],
         }
 
     def regenerate_answer_node(self, state: AgentState):
@@ -404,9 +411,18 @@ class CustomerSupportGraph:
 
     def escalation_node(self, state: AgentState):
 
+        ticket = self.handoff_queue.enqueue(
+            customer_id=state["customer_id"],
+            question=state["question"],
+            priority="urgent",
+            assigned_team="technical_support",
+            route="escalation",
+        )
+
         return {
             "priority": "urgent",
             "assigned_team": "technical_support",
+            "ticket_id": ticket["ticket_id"],
         }
 
     def onboarding_node(self, state: AgentState):
@@ -557,10 +573,12 @@ class CustomerSupportGraph:
 
 
 def build_graph(retriever, llm):
+    handoff_queue = HandoffQueue()
 
     graph = CustomerSupportGraph(
         retriever=retriever,
         llm=llm,
+        handoff_queue=handoff_queue
     )
 
     return graph.build()
